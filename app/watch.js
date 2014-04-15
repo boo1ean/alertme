@@ -1,5 +1,6 @@
 var snapshots = require('./services/snapshots');
 var referee = require('./referee');
+var allServices = Object.keys(require('./services'));
 
 var defaultSnapshotIntervalMS = 1000;
 var defaultCheckIntervalMS = 5000;
@@ -7,11 +8,14 @@ var defaultCheckIntervalMS = 5000;
 var snapshotInterval = null;
 var checkInterval = null;
 
-var watch = function(resources, snapshotIntervalMS, checkIntervalMS) {
+var watch = function(services, snapshotIntervalMS, checkIntervalMS) {
+	services = services || allServices
 	snapshotIntervalMS = snapshotIntervalMS || defaultSnapshotIntervalMS;
 	checkIntervalMS = checkIntervalMS || defaultCheckIntervalMS;
 
-	snapshotInterval = setInterval(snapshots.make.bind(null, resources), snapshotIntervalMS);
+	snapshots.use(services);
+
+	snapshotInterval = setInterval(snapshots.make, snapshotIntervalMS);
 	checkInterval = setInterval(referee.judge, checkIntervalMS);
 };
 
