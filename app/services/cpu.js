@@ -33,9 +33,9 @@ var service = {
 			getAverageLoad()
 		]).spread(function(numberOfCores, load) {
 			var data = {
-				one: load[0] / numberOfCores,
-				five: load[1] / numberOfCores,
-				fifteen: load[2] / numberOfCores 
+				one: load[0] / numberOfCores * 100,
+				five: load[1] / numberOfCores * 100,
+				fifteen: load[2] / numberOfCores * 100
 			};
 
 			return data;
