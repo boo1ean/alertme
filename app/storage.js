@@ -30,18 +30,10 @@ var storage = {
 			throw new Error('Not enough snapshots');
 		}
 
-		var deferred = Q.defer();
-
-		Q.all([
+		return Q.all([
 			storage.get(totalRecords - 2),
 			storage.get(totalRecords - 1)
-		]).then(function(results) {
-			deferred.resolve(results[0], results[1]);
-		}, function() {
-			deferred.reject(arguments);
-		});
-
-		return deferred.promise;
+		]);
 	}
 };
 
