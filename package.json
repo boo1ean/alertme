@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "q": "~1.0.1",
-    "sigar": "~0.0.2"
+    "sigar": "~0.0.2",
+    "q-io": "~1.11.0"
   },
   "devDependencies": {},
   "scripts": {
