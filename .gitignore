@@ -5,3 +5,4 @@ node_modules
 .vagrant
 *.log
 nohup.out
+storage/*
