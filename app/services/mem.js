@@ -2,16 +2,11 @@ var exec = require('../exec');
 
 var command = '/usr/bin/free -tmo | /usr/bin/tail -n+2 | /usr/bin/awk \'{print $2","$3-$6-$7","$4+$6+$7}\'';
 
-var numerify = function(n) {
-	return n - 0;
-};
-
-
 var service = {
 	stats: function() {
 		return exec(command).then(function(out) {
 			out = out.split('\n').filter(Boolean).map(function(row) {
-				return row.split(',').map(numerify);
+				return row.split(',').map(Number);
 			});
 
 			var data = {
