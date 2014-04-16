@@ -1,6 +1,6 @@
 var referee = {
-	judge: function() {
-		console.log('judge');
+	judge: function(events, it) {
+		console.log(events, it);
 	}
 };
 

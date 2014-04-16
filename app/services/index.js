@@ -1,7 +1,8 @@
 var Q = require('q');
+var _ = require('lodash');
 
 var services = {
-	memory: require('./memory'),
+	mem: require('./mem'),
 	cpu: require('./cpu')
 };
 

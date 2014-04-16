@@ -10,12 +10,12 @@ var defaults = {
 	snapshots: false,
 	check: true,
 	snapshotIntervalMS: 1000,
-	checkIntervalMS: 5000,
+	checkIntervalMS: 1000,
 	events: []
 };
 
 var watch = function(options) {
-	options = _.defaults(options, defaults);
+	options = _.defaults(options || {}, defaults);
 
 	if (options.snapshots) {
 		snapshotInterval = setInterval(snapshots.make, options.snapshotIntervalMS);
