@@ -3,8 +3,8 @@ var storage = require('./storage');
 
 var service = {
 	make: function() {
-		return stats().then(function() {
-			return storage.save();
+		return stats().then(function(data) {
+			return storage.save(data);
 		});
 	}
 };
