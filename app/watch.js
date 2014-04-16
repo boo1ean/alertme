@@ -1,22 +1,33 @@
-var snapshots = require('./services/snapshots');
+var snapshots = require('./snapshots');
+var stats = require('./services');
 var referee = require('./referee');
-var allServices = Object.keys(require('./services'));
-
-var defaultSnapshotIntervalMS = 1000;
-var defaultCheckIntervalMS = 5000;
+var _ = require('lodash');
 
 var snapshotInterval = null;
 var checkInterval = null;
 
-var watch = function(services, snapshotIntervalMS, checkIntervalMS) {
-	services = services || allServices
-	snapshotIntervalMS = snapshotIntervalMS || defaultSnapshotIntervalMS;
-	checkIntervalMS = checkIntervalMS || defaultCheckIntervalMS;
+var defaults = {
+	snapshots: false,
+	check: true,
+	snapshotIntervalMS: 1000,
+	checkIntervalMS: 5000,
+	events: []
+};
 
-	snapshots.use(services);
+var watch = function(options) {
+	options = _.defaults(options, defaults);
 
-	snapshotInterval = setInterval(snapshots.make, snapshotIntervalMS);
-	checkInterval = setInterval(referee.judge, checkIntervalMS);
+	if (options.snapshots) {
+		snapshotInterval = setInterval(snapshots.make, options.snapshotIntervalMS);
+	}
+
+	if (options.check) {
+		checkInterval = setInterval(function() {
+			stats().then(function(snapshot) {
+				referee.judge(options.events, snapshot);
+			});
+		}, options.checkIntervalMS);
+	}
 };
 
 watch.stop = function() {
